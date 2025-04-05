@@ -1,4 +1,5 @@
 mod employee;
+mod car;
 
 use axum::{
     Json,
@@ -16,7 +17,8 @@ async fn main() {
     let app = Router::new()
         .route("/", get(root))
         .route("/hello", get(hello))
-        .route("/json", get(getEmployee));
+        .route("/employee", get(get_employee))
+        .route("/car", get(get_car));
 
     // run our app with hyper, listening globally on port 3000
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
@@ -33,15 +35,30 @@ async fn hello() -> impl IntoResponse {
     return message;
 }
 
-async fn getEmployee() -> Json<employee::Employee> {
+async fn get_employee() -> Json<Vec<employee::Employee>> {
     let user = String::from("World").to_uppercase();
     let message = format!("Hello, Axum! {user}");
 
-    let employee = employee::Employee {
-        name: String::from("John Doe"),
-        age: 30,
-        position: String::from("Software Engineer"),
-    };
+    let mut emplist: Vec<employee::Employee> = Vec::new();
 
-    Json(employee)
+    for i in 0..10 {
+
+        let employee = employee::Employee {
+            name: String::from("John Doe"),
+            age: i as u32,
+            position: String::from("Software Engineer"),
+        };
+
+        emplist.push(employee);    
+    }
+
+    Json(emplist)
+}
+
+async fn get_car() -> Json<car::Car> {
+    let car = car::Car {
+        name: String::from("Toyota"),
+        age: 5,
+    };
+    Json(car)
 }
