@@ -12,4 +12,18 @@ impl Employee {
         Employee { name, age, position }
     }
 }
+
+impl Employee {
+    pub fn get_name(&self) -> &String {
+        &self.name
+    }
+
+    pub fn get_age(&self) -> &u32 { 
+        &self.age   
+    }
+
+    pub fn set_name(&mut self, name: String) {
+        self.name = name;
+    }
+}
  

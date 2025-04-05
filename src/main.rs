@@ -49,12 +49,16 @@ async fn get_employee() -> Json<Vec<employee::Employee>> {
         //     position: String::from("Software Engineer"),
         // };
 
-        let employee = employee::Employee::new(
+        let mut employee = employee::Employee::new(
             String::from("John Doe"),
             i as u32,
             String::from("Software Engineer"),
         );
 
+        employee.set_name(String::from("John Doe2"));
+        let t = employee.get_name();
+        
+        println!("employee name: {}", t);
         emplist.push(employee);    
     }
 
