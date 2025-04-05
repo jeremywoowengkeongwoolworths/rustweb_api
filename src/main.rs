@@ -38,16 +38,22 @@ async fn hello() -> impl IntoResponse {
 async fn get_employee() -> Json<Vec<employee::Employee>> {
     let user = String::from("World").to_uppercase();
     let message = format!("Hello, Axum! {user}");
-
+    let n: u16 = 10;
     let mut emplist: Vec<employee::Employee> = Vec::new();
 
-    for i in 0..10 {
+    for i in 0..n {
 
-        let employee = employee::Employee {
-            name: String::from("John Doe"),
-            age: i as u32,
-            position: String::from("Software Engineer"),
-        };
+        // let employee = employee::Employee {
+        //     name: String::from("John Doe"),
+        //     age: i as u32,
+        //     position: String::from("Software Engineer"),
+        // };
+
+        let employee = employee::Employee::new(
+            String::from("John Doe"),
+            i as u32,
+            String::from("Software Engineer"),
+        );
 
         emplist.push(employee);    
     }
